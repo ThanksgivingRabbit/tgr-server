@@ -83,7 +83,7 @@ public class Songpyeon extends BaseEntity {
   }
 
   private void setSender(String sender) {
-    if (StringUtils.isBlank(content)) {
+    if (StringUtils.isBlank(sender)) {
       this.sender = null;
       return;
     }

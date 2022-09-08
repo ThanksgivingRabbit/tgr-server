@@ -10,8 +10,10 @@ import com.tgr.songpyeon.dto.response.SongpyeonResponse;
 import com.tgr.songpyeon.repository.SongpyeonRepository;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class SongpyeonService {
   private final SongpyeonRepository songpyeonRepository;
 
@@ -19,6 +21,7 @@ public class SongpyeonService {
     this.songpyeonRepository = songpyeonRepository;
   }
 
+  @Transactional(readOnly = true)
   public SongpyeonResponse getSongpyeon(UUID code) {
     Songpyeon songpyeon = findSongpyeonByCode(code);
     if (songpyeon.isSecure()) {
@@ -27,6 +30,7 @@ public class SongpyeonService {
     return new SongpyeonResponse(songpyeon);
   }
 
+  @Transactional(readOnly = true)
   public SongpyeonResponse authenticateSongpyeon(UUID code, AuthenticateSongpyeonRequest request) {
     Songpyeon songpyeon = findSongpyeonByCode(code);
     if (songpyeon.authenticate(request.password())) {
@@ -43,6 +47,7 @@ public class SongpyeonService {
         .password(request.password())
         .hint(request.hint())
         .build();
+    songpyeonRepository.save(songpyeon);
     return new SongpyeonResponse(songpyeon);
   }
 
