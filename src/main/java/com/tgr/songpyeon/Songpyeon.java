@@ -2,7 +2,8 @@ package com.tgr.songpyeon;
 
 import com.tgr.common.BaseEntity;
 import com.tgr.common.exception.ErrorCode;
-import com.tgr.common.exception.custom.EssentialFieldBlankException;
+import com.tgr.common.exception.custom.InvalidParameterException;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,18 +48,66 @@ public class Songpyeon extends BaseEntity {
   @Builder
   public Songpyeon(String content, UUID code, String sender, String receiver,
       String password, String hint) {
-    this.content = content;
-    this.code = code;
-    this.sender = sender;
-    this.receiver = receiver;
-    this.password = password;
-    this.hint = hint;
+    setContent(content);
+    setCode(code);
+    setSender(sender);
+    setReceiver(receiver);
+    setPassword(password, hint);
   }
 
   private void setContent(String content) {
     if (StringUtils.isBlank(content)) {
-      throw new EssentialFieldBlankException(ErrorCode.CONTENT_IS_BLANK);
+      throw new InvalidParameterException(ErrorCode.CONTENT_IS_BLANK);
+    }
+    if (content.length() > 100) {
+      throw new InvalidParameterException(ErrorCode.CONTENT_IS_TOO_LONG);
     }
     this.content = content;
+  }
+
+  private void setCode(UUID code) {
+    if (Objects.isNull(code)) {
+      this.code = UUID.randomUUID();
+      return;
+    }
+    this.code = code;
+  }
+
+  private void setSender(String sender) {
+    if (StringUtils.isBlank(content)) {
+      this.sender = null;
+      return;
+    }
+    if (sender.length() > 20) {
+      throw new InvalidParameterException(ErrorCode.CONTENT_IS_TOO_LONG);
+    }
+    this.sender = sender;
+  }
+
+  private void setReceiver(String receiver) {
+    if (StringUtils.isBlank(receiver)) {
+      throw new InvalidParameterException(ErrorCode.RECEIVER_IS_BLANK);
+    }
+    if (receiver.length() > 20) {
+      throw new InvalidParameterException(ErrorCode.RECEIVER_IS_TOO_LONG);
+    }
+    this.receiver = receiver;
+  }
+
+  private void setPassword(String password, String hint) {
+    if (StringUtils.isBlank(password)) {
+      return;
+    }
+    if (StringUtils.isBlank(hint)) {
+      throw new InvalidParameterException(ErrorCode.HINT_IS_BLANK);
+    }
+    if (password.length() > 20) {
+      throw new InvalidParameterException(ErrorCode.PASSWORD_IS_TOO_LONG);
+    }
+    if (hint.length() > 50) {
+      throw new InvalidParameterException(ErrorCode.HINT_IS_TOO_LONG);
+    }
+    this.password = password;
+    this.hint = hint;
   }
 }
