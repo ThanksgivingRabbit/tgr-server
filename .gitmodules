@@ -1,0 +1,3 @@
+[submodule "tgr-server-submodule"]
+	path = tgr-server-submodule
+	url = git@github.com:ThanksgivingRabbit/tgr-server-submodule.git
