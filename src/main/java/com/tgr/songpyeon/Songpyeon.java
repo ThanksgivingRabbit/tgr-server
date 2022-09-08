@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -53,6 +54,14 @@ public class Songpyeon extends BaseEntity {
     setSender(sender);
     setReceiver(receiver);
     setPassword(password, hint);
+  }
+
+  public Boolean isSecure() {
+    return !StringUtils.isEmpty(password);
+  }
+
+  public Boolean authenticate(String password) {
+    return BCrypt.checkpw(password, this.password);
   }
 
   private void setContent(String content) {
@@ -107,7 +116,7 @@ public class Songpyeon extends BaseEntity {
     if (hint.length() > 50) {
       throw new InvalidParameterException(ErrorCode.HINT_IS_TOO_LONG);
     }
-    this.password = password;
+    this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     this.hint = hint;
   }
 }
