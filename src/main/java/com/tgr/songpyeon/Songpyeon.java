@@ -31,7 +31,7 @@ public class Songpyeon extends BaseEntity {
   @Column(name = "content", length = 100, nullable = false)
   private String content;
 
-  @Column(name = "code", nullable = false, unique = true)
+  @Column(name = "code", nullable = false, unique = true, columnDefinition = "BINARY(16)")
   private UUID code;
 
   @Column(name = "sender", length = 20)
@@ -40,7 +40,7 @@ public class Songpyeon extends BaseEntity {
   @Column(name = "receiver", length = 20, nullable = false)
   private String receiver;
 
-  @Column(name = "password", length = 20)
+  @Column(name = "pwd", length = 60)
   private String password;
 
   @Column(name = "hint", length = 50)
