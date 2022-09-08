@@ -4,6 +4,7 @@ import com.tgr.common.exception.ErrorCode;
 import com.tgr.common.exception.custom.AuthenticateException;
 import com.tgr.common.exception.custom.RecordNotFoundException;
 import com.tgr.songpyeon.Songpyeon;
+import com.tgr.songpyeon.dto.request.AuthenticateSongpyeonRequest;
 import com.tgr.songpyeon.dto.request.CreateSongpyeonRequest;
 import com.tgr.songpyeon.dto.response.SongpyeonResponse;
 import com.tgr.songpyeon.repository.SongpyeonRepository;
@@ -26,9 +27,9 @@ public class SongpyeonService {
     return new SongpyeonResponse(songpyeon);
   }
 
-  public SongpyeonResponse authenticateSongpyeon(UUID code, String password) {
+  public SongpyeonResponse authenticateSongpyeon(UUID code, AuthenticateSongpyeonRequest request) {
     Songpyeon songpyeon = findSongpyeonByCode(code);
-    if (songpyeon.authenticate(password)) {
+    if (songpyeon.authenticate(request.password())) {
       return new SongpyeonResponse(songpyeon);
     }
     throw new AuthenticateException(ErrorCode.PASSWORD_IS_WRONG);
