@@ -39,3 +39,15 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	destinationDirectory = file("./target")
+}
+
+task copyPrivate(type: Copy) {
+	copy {
+		from "./tgr-server-submodule"
+		include "application-prod.yml"
+		into "src/main/resources"
+	}
+}
