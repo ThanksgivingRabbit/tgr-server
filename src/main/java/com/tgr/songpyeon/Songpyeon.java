@@ -61,6 +61,9 @@ public class Songpyeon extends BaseEntity {
   }
 
   public Boolean authenticate(String password) {
+    if (StringUtils.isEmpty(this.password)) {
+      throw new InvalidParameterException(ErrorCode.PASSWORD_IS_UNNECESSARY);
+    }
     return BCrypt.checkpw(password, this.password);
   }
 
