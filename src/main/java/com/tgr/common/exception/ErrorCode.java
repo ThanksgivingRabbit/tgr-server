@@ -25,7 +25,8 @@ public enum ErrorCode {
   HINT_IS_BLANK(400, "SP006", "비밀번호 힌트는 필수입니다."),
   PASSWORD_IS_TOO_LONG(400, "SP007", "비밀번호는 최대 20자입니다."),
   HINT_IS_TOO_LONG(400, "SP008", "비밀번호 힌트는 최대 50자입니다."),
-  PASSWORD_IS_WRONG(401, "SP009", "비밀번호가 틀렸습니다.")
+  PASSWORD_IS_WRONG(401, "SP009", "비밀번호가 틀렸습니다."),
+  PASSWORD_IS_UNNECESSARY(401, "SP010", "인증이 필요 없는 송편입니다.")
   ;
 
   private final int status;
