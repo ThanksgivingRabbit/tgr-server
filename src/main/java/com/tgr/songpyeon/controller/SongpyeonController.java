@@ -7,6 +7,7 @@ import com.tgr.songpyeon.dto.response.SongpyeonResponse;
 import com.tgr.songpyeon.service.SongpyeonService;
 import java.net.URI;
 import java.util.UUID;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/v1/songpyeons")
@@ -40,7 +40,7 @@ public class SongpyeonController {
 
   @PostMapping
   public ResponseEntity<ApiResponse<SongpyeonResponse>> createSongpyeon(
-      @RequestBody CreateSongpyeonRequest request
+      @RequestBody @Valid CreateSongpyeonRequest request
   ) {
     ApiResponse<SongpyeonResponse> response = new ApiResponse<>(
         HttpStatus.CREATED.value(),
@@ -53,7 +53,7 @@ public class SongpyeonController {
   @PostMapping("/{code}/authenticate")
   public ResponseEntity<ApiResponse<SongpyeonResponse>> authenticateSongpyeon(
       @PathVariable UUID code,
-      @RequestBody AuthenticateSongpyeonRequest request
+      @RequestBody @Valid AuthenticateSongpyeonRequest request
   ) {
     ApiResponse<SongpyeonResponse> response = new ApiResponse<>(
         HttpStatus.OK.value(),
