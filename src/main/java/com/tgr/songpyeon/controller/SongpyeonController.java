@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class SongpyeonController {
 
   @GetMapping("/{code}")
   public ResponseEntity<ApiResponse<SongpyeonResponse>> getSongpyeon(
-      @RequestParam UUID code
+      @PathVariable UUID code
   ) {
     ApiResponse<SongpyeonResponse> response = new ApiResponse<>(
         HttpStatus.OK.value(),
@@ -51,7 +52,7 @@ public class SongpyeonController {
 
   @PostMapping("/{code}/authenticate")
   public ResponseEntity<ApiResponse<SongpyeonResponse>> authenticateSongpyeon(
-      @RequestParam UUID code,
+      @PathVariable UUID code,
       @RequestBody AuthenticateSongpyeonRequest request
   ) {
     ApiResponse<SongpyeonResponse> response = new ApiResponse<>(
